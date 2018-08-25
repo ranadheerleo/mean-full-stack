@@ -1,0 +1,99 @@
+<app-loading [condition]="isLoading"></app-loading>
+
+<app-toast [message]="toast.message"></app-toast>
+
+<div class="card" *ngIf="!isLoading">
+  <h4 class="card-header">Current cats ({{cats.length}})</h4>
+  <div class="card-block">
+    <table class="table table-bordered table-striped">
+      <thead class="thead-default">
+        <tr>
+          <th>Name</th>
+          <th>Age</th>
+          <th>Weight</th>
+          <th>Food</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody *ngIf="cats.length === 0">
+        <tr>
+          <td colspan="5">There are no cats in the DB. Add a new cat below.</td>
+        </tr>  
+      </tbody>
+      <tbody *ngIf="!isEditing">
+         <tr *ngFor="let cat of cats | paginate: { id:'foo', itemsPerPage: 3, currentPage: p }" >
+          <td>{{cat.name}}</td>
+          <td>{{cat.age}}</td>
+          <td>{{cat.weight}}</td>
+          <td><span *ngFor="let food of cat.food">{{food.itemName}}<br></span></td>
+          <td>
+            <button class="btn btn-sm btn-warning" (click)="enableEditing(cat)"><i class="fa fa-pencil"></i> Edit</button> 
+            <button class="btn btn-sm btn-danger" (click)="deleteCat(cat)"><i class="fa fa-trash"></i> Delete</button>
+          </td>
+        </tr>  
+      </tbody>
+      <tbody *ngIf="isEditing">
+        <tr>
+          <td colspan="5">
+            <form class="form-inline" #form="ngForm" (ngSubmit)="editCat(cat)" style="display:inline">
+              <div class="form-group">
+                <input class="form-control" type="text" name="name" [(ngModel)]="cat.name" placeholder="Name" required>
+              </div>
+              <div class="form-group">
+                <input class="form-control" type="number" name="age" [(ngModel)]="cat.age" placeholder="Age" min="0" required>
+              </div>
+              <div class="form-group">
+                <input class="form-control" type="number" name="weight" [(ngModel)]="cat.weight" placeholder="Weight" step="any" min="0" required>
+              </div>
+              <div class="form-group" >
+                  <angular2-multiselect  class="form-control" [data]="dropdownList" [(ngModel)]="cat.food" [settings]="dropdownSettings" [ngModelOptions]="{standalone: true}" >>
+            </angular2-multiselect>
+              </div>
+              <button class="btn btn-sm btn-primary" type="submit" [disabled]="!form.form.valid"><i class="fa fa-floppy-o"></i> Save</button>
+            </form>
+            <button class="btn btn-sm btn-warning" (click)="cancelEditing()"><i class="fa fa-times"></i> Cancel</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div *ngIf="!isEditing">
+       <pagination-controls  id="foo" class="my-pagination"
+                      (pageChange)="p = $event"
+                      maxSize="9"
+                      directionLinks="true"
+                      autoHide="true"
+                      previousLabel="Previous"
+                      nextLabel="Next"
+                      screenReaderPaginationLabel="Pagination"
+                      screenReaderPageLabel="page"
+                      screenReaderCurrentLabel="You're on page">
+       </pagination-controls>
+     </div>  
+  </div>
+</div>
+
+<div class="card" *ngIf="!isEditing">
+  <h4 class="card-header">Add new cat</h4>
+  <div class="card-block">
+    <form class="form-inline" [formGroup]="addCatForm" (ngSubmit)="addCat()" style="text-align:center">
+      <div class="form-group">
+        <input class="form-control" type="text" name="name" formControlName="name" placeholder="Name">
+      </div>
+      <div class="form-group">
+        <input class="form-control" type="number" name="age" formControlName="age" placeholder="Age" min="0">
+      </div>
+      <div class="form-group">
+        <input class="form-control" type="number" name="weight" formControlName="weight" placeholder="Weight" step="any" min="0">
+      </div>
+      <div class="form-group">
+            <angular2-multiselect  [data]="dropdownList" [(ngModel)]="selectedItems" [settings]="dropdownSettings" 
+                                  (onSelect)="onItemSelect($event)"
+                                  (onDeSelect)="OnItemDeSelect($event)" 
+                                  (onSelectAll)="onSelectAll($event)" 
+                                  (onDeSelectAll)="onDeSelectAll($event)" formControlName="food">>
+            </angular2-multiselect>
+      </div>
+      <button class="btn btn-primary" type="submit" [disabled]="!addCatForm.valid"><i class="fa fa-floppy-o"></i> Add</button>
+    </form>
+  </div>
+</div>

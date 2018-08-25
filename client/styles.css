@@ -1,0 +1,28 @@
+/* You can add global styles to this file, and also import other style files */
+
+body {
+  /* margin-top: 15px;
+  margin-bottom: 10px; */
+}
+
+.input-group {
+  margin-bottom: 15px;
+}
+
+.my-pagination /deep/ .ngx-pagination .current {
+    background-color: red;
+  }
+
+.my-pagination{
+	float: right;
+}  
+.navbar-left {
+  float: left !important;
+}
+.navbar-right{
+  float: right !important;
+}
+.navbar-right .dropdown-menu {
+  right: auto;
+  left: auto;
+}
