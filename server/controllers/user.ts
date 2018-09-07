@@ -9,7 +9,9 @@ export default class UserCtrl extends BaseCtrl {
 
   login = (req, res) => {
     this.model.findOne({ email: req.body.email }, (err, user) => {
+      console.log("Hi Satya....");
       if (!user) { return res.sendStatus(403); }
+      console.log("Hi Satya....2",user);
       user.comparePassword(req.body.password, (error, isMatch) => {
         if (!isMatch) { return res.sendStatus(403); }
         const token = jwt.sign({ user: user }, process.env.SECRET_TOKEN); // , { expiresIn: 10 } seconds

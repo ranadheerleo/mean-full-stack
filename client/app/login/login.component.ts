@@ -9,7 +9,7 @@ import { ToastComponent } from '../shared/toast/toast.component';
   selector: 'app-login',
   templateUrl: './login.component.html',
   styles: [`
-  .loginbackground {
+   .loginbackground {
       background-image: url("/assets/Images/logincar.png");
       background-color: #cccccc;
       background-size: cover;
@@ -63,7 +63,7 @@ export class LoginComponent implements OnInit {
 
   login() {
     this.auth.login(this.loginForm.value).subscribe(
-      res => this.router.navigate(['/']),
+      res => this.router.navigate(['/master/dashboard']),
       error => this.toast.setMessage('invalid email or password!', 'danger')
     );
   }
