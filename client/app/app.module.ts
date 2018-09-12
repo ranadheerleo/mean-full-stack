@@ -25,6 +25,8 @@ import { CatBreedService } from './services/catBreed.service';
 import { SideNavComponent } from './master/sidenav.component';
 import { MasterComponent } from './master/master.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import {CatNamePipe} from './cats/cat-name.pipe';
+import {CatsWeightPipe} from './cats/cats-weight.pipe';
 @NgModule({
   declarations: [
     AppComponent,
@@ -39,7 +41,9 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     CatsBreedComponent,
     SideNavComponent,
     MasterComponent,
-    DashboardComponent
+    DashboardComponent,
+    CatNamePipe,
+    CatsWeightPipe
   ],
   imports: [
     RoutingModule,

@@ -5,6 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { ToastComponent } from './toast/toast.component';
 import { LoadingComponent } from './loading/loading.component';
+import {CatNamePipe} from '../cats/cat-name.pipe';
 
 @NgModule({
   imports: [
@@ -28,7 +29,8 @@ import { LoadingComponent } from './loading/loading.component';
     LoadingComponent
   ],
   providers: [
-    ToastComponent
+    ToastComponent,
+    CatNamePipe
   ]
 })
 export class SharedModule { }

@@ -1,14 +1,17 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 
-import { CatService } from '../services/cat.service';
-import { ToastComponent } from '../shared/toast/toast.component';
-import { Cat } from '../shared/models/cat.model';
+import {CatService} from '../services/cat.service';
+import {ToastComponent} from '../shared/toast/toast.component';
+import {Cat} from '../shared/models/cat.model';
+import {CatNamePipe} from './cat-name.pipe';
+import {CatsWeightPipe} from './cats-weight.pipe';
 
 @Component({
   selector: 'app-cats',
   templateUrl: './cats.component.html',
-  styleUrls: ['./cats.component.css']
+  styleUrls: ['./cats.component.css'],
+  providers: [ CatNamePipe,  CatsWeightPipe]
 })
 export class CatsComponent implements OnInit {
 
@@ -16,6 +19,7 @@ export class CatsComponent implements OnInit {
   cats: Cat[] = [];
   isLoading = true;
   isEditing = false;
+  filteredCat = Array < Cat > ();
 
   addCatForm: FormGroup;
   name = new FormControl('', Validators.required);
@@ -58,14 +62,14 @@ export class CatsComponent implements OnInit {
                         {"id":5,"itemName":"Raisin"},
                         {"id":6,"itemName":"Avacado"},
                       ];
-                    
-  this.dropdownSettings = { 
+
+  this.dropdownSettings = {
                             text: " Select Food      ",
                             selectAllText: 'Select All',
                             unSelectAllText: 'UnSelect All',
                             classes:"myclass custom-class",
                             buttonClasses: 'btn btn-default btn-block'
-                          };   
+                          };
   }
 
 
@@ -125,6 +129,12 @@ export class CatsComponent implements OnInit {
       );
     }
   }
+
+  // filter(value) {
+  //   this.filteredCat = this.cat.filter( (cat: Cat) =>
+  //     Cat.name.toLocaleLowerCase().indexOf(value)! == -1);
+  //   console.log(value);
+  // }
 
    onItemSelect(item:any){
         console.log(item);
